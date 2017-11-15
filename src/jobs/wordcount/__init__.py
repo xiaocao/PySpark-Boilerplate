@@ -1,15 +1,18 @@
 import re
 from functools import partial
+
 from shared.context import JobContext
 
 __author__ = 'ekampf'
 
+
 class WordCountJobContext(JobContext):
     def _init_accumulators(self, sc):
-        self.initalize_counter(sc, 'words')
+        self.init_counter(sc, 'words')
 
 
 strip_regexp = re.compile(r"[^\w]*")
+
 
 def to_pairs(context, word):
     context.inc_counter('words')
@@ -17,7 +20,7 @@ def to_pairs(context, word):
 
 
 def analyze(sc):
-    print "Running wordcount"
+    print("Running wordcount")
     context = WordCountJobContext(sc)
 
     text = """
@@ -38,11 +41,11 @@ Quisque arcu nunc, feugiat ut mi quis, blandit varius elit. Quisque ullamcorper 
 
     words = sc.parallelize(text.split())
     pairs = words.map(to_pairs_trasform)
-    counts = pairs.reduceByKey(lambda a, b: a+b)
+    counts = pairs.reduceByKey(lambda a, b: a + b)
     ordered = counts.sortBy(lambda pair: pair[1], ascending=False)
 
     result = ordered.collect()
-    print result
+    print(result)
     context.print_accumulators()
 
     return result
