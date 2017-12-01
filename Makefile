@@ -35,7 +35,7 @@ deps: .venv
 	. .venv/bin/activate && pip install -U -r requirements.txt -t ./src/libs
 
 dev_deps: .venv
-	. .venv/bin/activate && pip install -U -r dev_requirements.txt
+	. .venv/bin/activate && pip install -U -r requirements-dev.txt
 
 lint:
 	. .venv/bin/activate && pylint -r n src/main.py src/shared src/jobs tests
