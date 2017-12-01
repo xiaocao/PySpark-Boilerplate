@@ -13,7 +13,7 @@ all: default
 default: clean dev_deps deps test lint build
 
 .venv:
-	if [ ! -e ".venv/bin/activate_this.py" ] ; then virtualenv --clear .venv ; fi
+	if [ ! -e ".venv/bin/activate" ] ; then pyvenv3 --clear .venv ; fi
 
 clean: clean-build clean-pyc clean-test
 
